@@ -1,1 +1,1 @@
-Fuck you nikola and abel
+fuck you zulkar bloody bastard bitch
