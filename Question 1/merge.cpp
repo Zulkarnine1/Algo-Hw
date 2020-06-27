@@ -79,4 +79,6 @@ int main() {
    mergeSort(arr, 0, n-1);     
    cout << "Sorted array: ";
    display(arr, n);
+
+   system("pause");
 }

@@ -39,6 +39,9 @@ int main()
 	bubbleSort(arr, n); 
 	cout<<"Sorted array: \n"; 
 	printArray(arr, n); 
+
+	system("pause");
+
 	return 0; 
 } 
 

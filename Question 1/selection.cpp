@@ -43,7 +43,8 @@ int main()
 	int n = sizeof(arr)/sizeof(arr[0]); 
 	selectionSort(arr, n); 
 	cout << "Sorted array: \n"; 
-	printArray(arr, n); 
+	printArray(arr, n);
+	system("pause");
 	return 0; 
 } 
 
