@@ -1,1 +1,1 @@
-Fuck you zulkar
+Fuck you nikola and abel
