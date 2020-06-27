@@ -73,7 +73,8 @@ int main()
 
 	cout << "Maximum value we can obtain = "
 		<< fractionalKnapsack(W, arr, n);
-		
+
+	cout << endl;
 	system("pause");
 	cout << endl;
 	return 0; 
