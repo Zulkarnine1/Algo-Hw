@@ -33,7 +33,9 @@ int main()
 	int W = 50; 
 	int n = sizeof(val) / sizeof(val[0]); 
 	cout << "The maximum value that can be obtained is : " << endl ; 
-	cout << knapSack(W, wt, val, n); 
+	cout << knapSack(W, wt, val, n);
+	system("pause");
+	cout << endl;
 	return 0; 
 } 
 
