@@ -1,14 +1,12 @@
-// A C++ program for Dijkstra's single source shortest path algorithm.
-// The program is for adjacency matrix representation of the graph
-// this is a comment 
+// Questions 3
+
 #include <limits.h>
 #include <stdio.h>
-
-// Number of vertices in the graph
 #define V 9
 
 // A utility function to find the vertex with minimum distance value, from
 // the set of vertices not yet included in shortest path tree
+//They hide pretty well
 int minDistance(int dist[], bool sptSet[])
 {
     // Initialize min value
@@ -29,27 +27,22 @@ void printSolution(int dist[])
         printf("%d \t\t %d\n", i, dist[i]);
 }
 
-// Function that implements Dijkstra's single source shortest path algorithm
-// for a graph represented using adjacency matrix representation
-void dijkstra(int graph[V][V], int src)
+void Algo(int graph[V][V], int src)
 {
-    int dist[V]; // The output array.  dist[i] will hold the shortest
-    // distance from src to i
-
-    bool sptSet[V]; // sptSet[i] will be true if vertex i is included in shortest
-    // path tree or shortest distance from src to i is finalized
+    int dist[V];
+    bool sptSet[V];
 
     // Initialize all distances as INFINITE and stpSet[] as false
+    // because why not
     for (int i = 0; i < V; i++)
         dist[i] = INT_MAX, sptSet[i] = false;
 
-    // Distance of source vertex from itself is always 0
+    // Distance of source vertex from itself is always 0 cause 1 is too much
     dist[src] = 0;
 
     // Find shortest path for all vertices
+    // no reasons to find the longest one
     for (int count = 0; count < V - 1; count++) {
-        // Pick the minimum distance vertex from the set of vertices not
-        // yet processed. u is always equal to src in the first iteration.
         int u = minDistance(dist, sptSet);
 
         // Mark the picked vertex as processed
@@ -57,10 +50,6 @@ void dijkstra(int graph[V][V], int src)
 
         // Update dist value of the adjacent vertices of the picked vertex.
         for (int v = 0; v < V; v++)
-
-            // Update dist[v] only if is not in sptSet, there is an edge from
-            // u to v, and total weight of path from src to  v through u is
-            // smaller than current value of dist[v]
             if (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX
                 && dist[u] + graph[u][v] < dist[v])
                 dist[v] = dist[u] + graph[u][v];
@@ -70,10 +59,9 @@ void dijkstra(int graph[V][V], int src)
     printSolution(dist);
 }
 
-// driver program to test above function
 int main()
 {
-    /* Let us create the example graph discussed above */
+    // Here is an example graph
     int graph[V][V] = { { 0, 4, 0, 0, 0, 0, 0, 8, 0 },
                         { 4, 0, 8, 0, 0, 0, 0, 11, 0 },
                         { 0, 8, 0, 7, 0, 4, 0, 0, 2 },
@@ -84,7 +72,7 @@ int main()
                         { 8, 11, 0, 0, 0, 0, 1, 0, 7 },
                         { 0, 0, 2, 0, 0, 0, 6, 7, 0 } };
 
-    dijkstra(graph, 0);
+    Algo(graph, 0);
 
     return 0;
 }
