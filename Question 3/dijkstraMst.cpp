@@ -1,62 +1,61 @@
 // Questions 3
-
 #include <limits.h>
 #include <stdio.h>
 #define V 9
 
-// A utility function to find the vertex with minimum distance value, from
+// A utility function to find the vertex with minimum disance value, from
 // the set of vertices not yet included in shortest path tree
 //They hide pretty well
-int minDistance(int dist[], bool sptSet[])
+int mindistance(int dis[], bool spathSet[])
 {
     // Initialize min value
     int min = INT_MAX, min_index;
 
     for (int v = 0; v < V; v++)
-        if (sptSet[v] == false && dist[v] <= min)
-            min = dist[v], min_index = v;
+        if (spathSet[v] == false && dis[v] <= min)
+            min = dis[v], min_index = v;
 
     return min_index;
 }
 
-// A utility function to print the constructed distance array
-void printSolution(int dist[])
+// A utility function to print the constructed disance array
+void printSolution(int dis[])
 {
-    printf("Vertex \t\t Distance from Source\n");
+    printf("Vertex \t\t disance from Source\n");
     for (int i = 0; i < V; i++)
-        printf("%d \t\t %d\n", i, dist[i]);
+        printf("%d \t\t %d\n", i, dis[i]);
 }
 
 void Algo(int graph[V][V], int src)
 {
-    int dist[V];
-    bool sptSet[V];
+    int dis[V];
+    bool spathSet[V];
 
-    // Initialize all distances as INFINITE and stpSet[] as false
+    // Initialize all disances as INFINITE and stpSet[] as false
     // because why not
     for (int i = 0; i < V; i++)
-        dist[i] = INT_MAX, sptSet[i] = false;
+        dis[i] = INT_MAX, spathSet[i] = false;
 
-    // Distance of source vertex from itself is always 0 cause 1 is too much
-    dist[src] = 0;
+    // disance of source vertex from itself is always 0 cause 1 is too much
+    dis[src] = 0;
 
     // Find shortest path for all vertices
     // no reasons to find the longest one
     for (int count = 0; count < V - 1; count++) {
-        int u = minDistance(dist, sptSet);
+        int u = mindistance(dis, spathSet);
 
         // Mark the picked vertex as processed
-        sptSet[u] = true;
+        spathSet[u] = true;
 
-        // Update dist value of the adjacent vertices of the picked vertex.
+        // Update dis value of the adjacent vertices of the picked vertex.
         for (int v = 0; v < V; v++)
-            if (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX
-                && dist[u] + graph[u][v] < dist[v])
-                dist[v] = dist[u] + graph[u][v];
+            if (!spathSet[v] && graph[u][v] && dis[u] != INT_MAX
+                && dis[u] + graph[u][v] < dis[v])
+                dis[v] = dis[u] + graph[u][v];
     }
 
-    // print the constructed distance array
-    printSolution(dist);
+    // print the constructed disance array
+    printSolution(dis);
 }
 
 int main()
