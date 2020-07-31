@@ -1,5 +1,5 @@
 //our c++ implementation of 8 puzzle
-#include <bits/stdc++.h>
+#include <bits/stdc++.h> //remember to adapt this path
 using namespace std;
 #define N 3
 
