@@ -1,77 +1,107 @@
-// Questions 3
-#include <limits.h>
-#include <stdio.h>
-#define V 9
+// A C++ program for Prim's Minimum
+// Spanning Tree (MST) algorithm. The program is
+// for adjacency matrix representation of the graph
+#include <bits/stdc++.h>
+using namespace std;
 
-// A utility function to find the vertex with minimum disance value, from
-// the set of vertices not yet included in shortest path tree
-//They hide pretty well
-int mindistance(int dis[], bool spathSet[])
-{
-    // Initialize min value
-    int min = INT_MAX, min_index;
+// Number of vertices in the graph
+#define V 5
 
-    for (int v = 0; v < V; v++)
-        if (spathSet[v] == false && dis[v] <= min)
-            min = dis[v], min_index = v;
+// A utility function to find the vertex with
+// minimum key value, from the set of vertices
+// not yet included in MST
+int minKey(int key[], bool mstSet[])
+{ 
+	// Initialize min value
+	int min = INT_MAX, min_index;
 
-    return min_index;
+	for (int v = 0; v < V; v++)
+		if (mstSet[v] == false && key[v] < min)
+			min = key[v], min_index = v;
+
+	return min_index;
 }
 
-// A utility function to print the constructed disance array
-void printSolution(int dis[])
+// A utility function to print the
+// constructed MST stored in parent[]
+void printMST(int parent[], int graph[V][V])
 {
-    printf("Vertex \t\t disance from Source\n");
-    for (int i = 0; i < V; i++)
-        printf("%d \t\t %d\n", i, dis[i]);
+	cout<<"Edge \tWeight\n";
+	for (int i = 1; i < V; i++)
+		cout<<parent[i]<<" - "<<i<<" \t"<<graph[i][parent[i]]<<" \n";
 }
 
-void Algo(int graph[V][V], int src)
+// Function to construct and print MST for
+// a graph represented using adjacency
+// matrix representation
+void primMST(int graph[V][V])
 {
-    int dis[V];
-    bool spathSet[V];
+	// Array to store constructed MST
+	int parent[V];
 
-    // Initialize all disances as INFINITE and stpSet[] as false
-    // because why not
-    for (int i = 0; i < V; i++)
-        dis[i] = INT_MAX, spathSet[i] = false;
+	// Key values used to pick minimum weight edge in cut
+	int key[V];
 
-    // disance of source vertex from itself is always 0 cause 1 is too much
-    dis[src] = 0;
+	// To represent set of vertices included in MST
+	bool mstSet[V];
 
-    // Find shortest path for all vertices
-    // no reasons to find the longest one
-    for (int count = 0; count < V - 1; count++) {
-        int u = mindistance(dis, spathSet);
+	// Initialize all keys as INFINITE
+	for (int i = 0; i < V; i++)
+		key[i] = INT_MAX, mstSet[i] = false;
 
-        // Mark the picked vertex as processed
-        spathSet[u] = true;
+	// Always include first 1st vertex in MST.
+	// Make key 0 so that this vertex is picked as first vertex.
+	key[0] = 0;
+	parent[0] = -1; // First node is always root of MST
 
-        // Update dis value of the adjacent vertices of the picked vertex.
-        for (int v = 0; v < V; v++)
-            if (!spathSet[v] && graph[u][v] && dis[u] != INT_MAX
-                && dis[u] + graph[u][v] < dis[v])
-                dis[v] = dis[u] + graph[u][v];
-    }
+	// The MST will have V vertices
+	for (int count = 0; count < V - 1; count++)
+	{
+		// Pick the minimum key vertex from the
+		// set of vertices not yet included in MST
+		int u = minKey(key, mstSet);
 
-    // print the constructed disance array
-    printSolution(dis);
+		// Add the picked vertex to the MST Set
+		mstSet[u] = true;
+
+		// Update key value and parent index of
+		// the adjacent vertices of the picked vertex.
+		// Consider only those vertices which are not
+		// yet included in MST
+		for (int v = 0; v < V; v++)
+
+			// graph[u][v] is non zero only for adjacent vertices of m
+			// mstSet[v] is false for vertices not yet included in MST
+			// Update the key only if graph[u][v] is smaller than key[v]
+			if (graph[u][v] && mstSet[v] == false && graph[u][v] < key[v])
+				parent[v] = u, key[v] = graph[u][v];
+	}
+
+	// print the constructed MST
+	printMST(parent, graph);
 }
 
+// Driver code
 int main()
 {
-    // Here is an example graph
-    int graph[V][V] = { { 0, 4, 0, 0, 0, 0, 0, 8, 0 },
-                        { 4, 0, 8, 0, 0, 0, 0, 11, 0 },
-                        { 0, 8, 0, 7, 0, 4, 0, 0, 2 },
-                        { 0, 0, 7, 0, 9, 14, 0, 0, 0 },
-                        { 0, 0, 0, 9, 0, 10, 0, 0, 0 },
-                        { 0, 0, 4, 14, 10, 0, 2, 0, 0 },
-                        { 0, 0, 0, 0, 0, 2, 0, 1, 6 },
-                        { 8, 11, 0, 0, 0, 0, 1, 0, 7 },
-                        { 0, 0, 2, 0, 0, 0, 6, 7, 0 } };
+	/* Let us create the following graph
+		2 3
+	(0)--(1)--(2)
+	| / \ |
+	6| 8/ \5 |7
+	| / \ |
+	(3)-------(4)
+			9	 */
+	int graph[V][V] = { { 0, 2, 0, 6, 0 },
+						{ 2, 0, 3, 8, 5 },
+						{ 0, 3, 0, 0, 7 },
+						{ 6, 8, 0, 0, 9 },
+						{ 0, 5, 7, 9, 0 } };
 
-    Algo(graph, 0);
+	// Print the solution
+	primMST(graph);
 
-    return 0;
+	return 0;
 }
+
+// This code is contributed by rathbhupendra
