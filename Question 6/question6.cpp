@@ -7,7 +7,7 @@ using namespace std;
 struct Node
 {
 
-	Node* parent; 
+	Node* prt;
 
 
 	int mat[N][N];
@@ -34,12 +34,12 @@ int printMatrix(int mat[N][N])
 
 
 Node* newNode(int mat[N][N], int x, int y, int newX,
-			int newY, int level, Node* parent)
+			int newY, int level, Node* prt)
 {
 	Node* node = new Node;
 
 
-	node->parent = parent;
+	node->prt = prt;
 
 	memcpy(node->mat, mat, sizeof node->mat);
 
@@ -82,7 +82,7 @@ void printPath(Node* root)
 {
 	if (root == NULL)
 		return;
-	printPath(root->parent);
+	printPath(root->prt);
 	printMatrix(root->mat);
 
 	printf("\n");
