@@ -7,7 +7,7 @@ using namespace std;
 struct Node
 {
 
-	Node* parent;
+	Node* parent; 
 
 
 	int mat[N][N];
