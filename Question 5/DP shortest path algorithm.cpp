@@ -1,4 +1,4 @@
-// A C++ program for Bellman-Ford's single source 
+// A C++ program for Bellman-Ford's single source
 // shortest path algorithm.
 #include <bits/stdc++.h>
 
